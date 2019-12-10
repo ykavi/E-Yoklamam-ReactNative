@@ -19,9 +19,9 @@ export default class LogoScreen extends React.Component {
         colors={['#65BBC9', '#E4ECED']}
         style={styles.linearGradient}>
         <StatusBar
-          translucent
-          barStyle="light-content"
-          backgroundColor="transparent"
+          barStyle="white-content"
+          backgroundColor="#65BBC9"
+          translucent={false} // headere iter
         />
         <Image source={require('../images/logo.png')} style={styles.image} />
         <Text style={styles.text}>E-Yoklamam</Text>

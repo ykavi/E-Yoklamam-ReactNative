@@ -5,6 +5,7 @@ import RegisterStudent from './registerStudent';
 ///Elements
 import InputText from '../elements/input';
 import TouchableButton from '../elements/touchableButton';
+import ErrorMessageText from '../elements/errorText';
 
 export {LogoScreen};
 export {SelectionScreen};
@@ -14,3 +15,4 @@ export {RegisterStudent};
 ///Elements
 export {InputText};
 export {TouchableButton};
+export {ErrorMessageText};

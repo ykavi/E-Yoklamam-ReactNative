@@ -22,7 +22,7 @@ export default class StudentLogin extends React.Component {
     headerTitleStyle: {
       color: '#707070',
       fontSize: 22,
-      letterSpacing: 5,
+      letterSpacing: 4,
     },
   };
 
