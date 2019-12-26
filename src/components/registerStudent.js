@@ -6,6 +6,7 @@ import {
   View,
   ActivityIndicator,
   Modal,
+  Alert,
 } from 'react-native';
 import {InputText} from './';
 import {TouchableButton} from './';
@@ -41,10 +42,25 @@ export default class RegisterStudent extends React.Component {
   _handleSubmit = async (values, bag) => {
     try {
       await registerApi(values);
-      //alert('Kayıt tamam');
+      Alert.alert(
+        'Kayıt işlemi başarılı',
+        'Artık bu bilgileri kullanarak giriş yapabilirsiniz.',
+        [
+          {
+            text: 'Tamam',
+            onPress: () => this.props.navigation.navigate('StudentLogin'),
+          },
+        ],
+        {cancelable: false},
+      );
     } catch (error) {
       bag.setErrors(error);
-      alert(error);
+      Alert.alert(
+        'Hata ',
+        error,
+        [{text: 'Tamam', onPress: () => console.log('OK Pressed')}],
+        {cancelable: false},
+      );
     }
   };
 
@@ -251,12 +267,12 @@ export default class RegisterStudent extends React.Component {
                 <Modal
                   animationType="slide"
                   transparent={true}
-                  visible={isSubmitting}
+                  visible={isSubmitting} //isSubmitting
                   onRequestClose={() => {
                     Alert.alert('Modal has been closed.');
                   }}>
                   <View style={styles.modal}>
-                    <ActivityIndicator size="large" color="#0000ff" />
+                    <ActivityIndicator size="large" color="#000ff" />
                   </View>
                 </Modal>
               </View>
@@ -272,8 +288,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   modal: {
-    backgroundColor: 'white',
-    opacity: 0.2,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',

@@ -12,8 +12,11 @@
   },
   "dependencies": {
     "formik": "^2.0.7",
+    "mobx": "^5.15.1",
+    "mobx-react": "^6.1.4",
     "react": "16.9.0",
     "react-native": "0.61.5",
+    "react-native-axios": "^0.17.1",
     "react-native-gesture-handler": "^1.5.1",
     "react-native-linear-gradient": "^2.5.6",
     "react-native-reanimated": "^1.4.0",
@@ -24,13 +27,15 @@
   },
   "devDependencies": {
     "@babel/core": "7.7.4",
+    "@babel/plugin-proposal-decorators": "^7.7.4",
+    "@babel/preset-flow": "^7.7.4",
     "@babel/runtime": "7.7.4",
     "@react-native-community/eslint-config": "0.0.5",
     "babel-jest": "24.9.0",
     "eslint": "6.7.1",
     "jest": "24.9.0",
     "jetifier": "^1.6.4",
-    "metro-react-native-babel-preset": "0.56.3",
+    "metro-react-native-babel-preset": "^0.56.3",
     "react-test-renderer": "16.9.0"
   },
   "jest": {

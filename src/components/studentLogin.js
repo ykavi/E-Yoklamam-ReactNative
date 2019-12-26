@@ -71,7 +71,9 @@ export default class StudentLogin extends React.Component {
                 <Text style={styles.forgotPassw}>Şifreni mi unuttun?</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.loginBtn}>
+              <TouchableOpacity
+                style={styles.loginBtn}
+                onPress={() => this.props.navigation.navigate('StudentHome')}>
                 <Text
                   style={{
                     color: '#FFFF',

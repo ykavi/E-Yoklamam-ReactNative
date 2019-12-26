@@ -1,8 +1,13 @@
 import React from 'react';
-import {LogoScreen} from './components';
-import {SelectionScreen} from './components';
-import {StudentLogin} from './components';
-import {RegisterStudent} from './components';
+
+import {
+  LogoScreen,
+  SelectionScreen,
+  StudentLogin,
+  RegisterStudent,
+  StudentHome,
+} from './components';
+
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import {StyleSheet} from 'react-native';
@@ -32,9 +37,13 @@ const AppNavigator = createStackNavigator(
     RegisterStudent: {
       screen: RegisterStudent,
     },
+    StudentHome: {
+      screen: StudentHome,
+    },
   },
   {
     initialRouteName: 'Home',
+    headerLayoutPreset: 'center', //header baslık konumu
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: '#f4511e',

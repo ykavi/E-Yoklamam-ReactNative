@@ -1,24 +1,13 @@
 import React from 'react';
-import Navigation from './navigation'
-import {
-  StyleSheet,
-  View,
-  Text
-} from 'react-native';
+import Navigation from './navigation';
+import {StyleSheet} from 'react-native';
 
 export class App extends React.Component {
-
   render() {
-    return (
-
-      <Navigation />
-
-    );
+    return <Navigation />;
   }
 }
 
-const styles = StyleSheet.create({
-
-});
+const styles = StyleSheet.create({});
 
 export default App;
