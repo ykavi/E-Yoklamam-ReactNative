@@ -129,7 +129,7 @@ export default class RegisterStudent extends React.Component {
                   value={values.studentNumber}
                   onChangeText={handleChange('studentNumber')}
                   placeholder="Öğrenci numaranızı giriniz"
-                  autoCapitalize="none"
+                  autoCapitalize="characters"
                   returnKeyType={'next'}
                   onRef={ref => {
                     this.inputs['studentNo'] = ref;

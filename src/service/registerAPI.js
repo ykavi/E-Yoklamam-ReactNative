@@ -3,7 +3,7 @@ import axios from 'react-native-axios';
 const registerApi = user => {
   return new Promise((resolve, reject) => {
     axios
-      .post('http://192.168.10.59:3000/students/new', {
+      .post('http://192.168.1.23:3000/students/new', {
         StudenNo: user.studentNumber,
         name: user.name,
         surName: user.surName,

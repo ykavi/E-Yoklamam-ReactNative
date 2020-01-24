@@ -5,14 +5,21 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  KeyboardAvoidingView,
+  Alert,
   ScrollView,
+  ActivityIndicator,
   View,
+  Modal,
   TextInput,
 } from 'react-native';
-import {placeholder} from '@babel/types';
+import {ErrorMessageText} from './';
+import loginApi from '../service/loginAPI';
 
 export default class StudentLogin extends React.Component {
+  constructor(props) {
+    super(props);
+    this.submit = this.submit.bind(this); //Bu fonksiyona propsları baglıyoruz icerde kullanabilmek icin
+  }
   static navigationOptions = {
     title: 'Öğrenci Girişi',
     headerStyle: {
@@ -24,6 +31,81 @@ export default class StudentLogin extends React.Component {
       fontSize: 22,
       letterSpacing: 4,
     },
+  };
+  state = {
+    username: '',
+    password: '',
+    errMessage: '',
+    errMessagePASS: '',
+    nameFlak: 0,
+    passFlak: 0,
+    modalVisible: false,
+  };
+  submit = async () => {
+    if (
+      this.state.username.trim() == '' ||
+      this.state.username.length.toString() <= 6
+    ) {
+      this.setState({errMessage: '* Minumum 6 karakter'});
+      this.setState({nameFlak: 1});
+    } else {
+      this.setState({errMessage: ''});
+      this.setState({nameFlak: 0});
+      if (
+        this.state.password.trim() != '' &&
+        this.state.password.length.toString() >= 5
+      ) {
+        var toJSON =
+          "{'username': '" +
+          this.state.username +
+          "', 'password': '" +
+          this.state.password +
+          "'}";
+        var body = eval('(' + toJSON + ')');
+        this.setState({errMessagePASS: ''});
+        this.setState({passFlak: 0});
+        try {
+          this.setState({modalVisible: true});
+          await loginApi(body);
+          this.setState({modalVisible: false});
+          this.props.navigation.navigate('StudentHome');
+        } catch (error) {
+          //bag.setErrors(error);
+          this.setState({modalVisible: false});
+          Alert.alert(
+            'Hata ',
+            error,
+            [{text: 'Tamam', onPress: () => console.log('OK Pressed')}],
+            {cancelable: false},
+          );
+        }
+      }
+    }
+
+    if (
+      this.state.password.trim() == '' ||
+      this.state.password.length.toString() < 5
+    ) {
+      this.setState({errMessagePASS: '* Minumum 5 karakter'});
+      this.setState({passFlak: 1});
+    } else {
+      this.setState({errMessagePASS: ''});
+      this.setState({passFlak: 0});
+      if (
+        this.state.username.trim() != '' &&
+        this.state.username.length.toString() > 6
+      ) {
+        var toJSON =
+          "{'username': '" +
+          this.state.username +
+          "', 'password': '" +
+          this.state.password +
+          "'}";
+        var body = eval('(' + toJSON + ')');
+        this.setState({errMessage: ''});
+        this.setState({nameFlak: 0});
+      }
+    }
   };
 
   render() {
@@ -41,24 +123,38 @@ export default class StudentLogin extends React.Component {
               <Text style={styles.inputHeader}>Öğrenci Numarası</Text>
               <View style={{flex: 0.4}}></View>
               <TextInput
+                maxLength={14}
+                onChangeText={value => this.setState({username: value})}
                 onSubmitEditing={() => this.refs.passInput.focus()}
                 returnKeyType="next"
                 autoCapitalize="none"
                 fontWeight="italic"
                 placeholder="Öğrenci numaranızı giriniz.."
-                style={styles.studentNumberInput}></TextInput>
+                style={
+                  this.state.nameFlak
+                    ? styles.studentNumberInputErr
+                    : styles.studentNumberInput
+                }></TextInput>
+              <ErrorMessageText errText={this.state.errMessage} />
             </View>
 
             <View style={(styles.butonView, {marginBottom: 20})}>
               <Text style={styles.inputHeader}>Şifre</Text>
               <TextInput
+                maxLength={14}
+                onChangeText={value => this.setState({password: value})}
                 returnKeyType="go"
                 ref={'passInput'}
                 autoCapitalize="none"
                 placeholder="Şifrenizi giriniz.."
                 secureTextEntry={true}
-                style={styles.studentNumberInput}
+                style={
+                  this.state.passFlak
+                    ? styles.studentNumberInputErr
+                    : styles.studentNumberInput
+                }
               />
+              <ErrorMessageText errText={this.state.errMessagePASS} />
             </View>
 
             <View
@@ -71,9 +167,7 @@ export default class StudentLogin extends React.Component {
                 <Text style={styles.forgotPassw}>Şifreni mi unuttun?</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity
-                style={styles.loginBtn}
-                onPress={() => this.props.navigation.navigate('StudentHome')}>
+              <TouchableOpacity style={styles.loginBtn} onPress={this.submit}>
                 <Text
                   style={{
                     color: '#FFFF',
@@ -99,6 +193,17 @@ export default class StudentLogin extends React.Component {
             </Text>
           </TouchableOpacity>
         </View>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={this.state.modalVisible} //isSubmitting
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+          }}>
+          <View style={styles.modal}>
+            <ActivityIndicator size="large" color="#000ff" />
+          </View>
+        </Modal>
       </LinearGradient>
     );
   }
@@ -113,6 +218,11 @@ const styles = StyleSheet.create({
   },
   forgotPassw: {
     color: '#707070',
+  },
+  modal: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   loginBtn: {
     borderRadius: 20,
@@ -131,6 +241,18 @@ const styles = StyleSheet.create({
     letterSpacing: 0.6,
     fontSize: 17,
     borderBottomColor: '#707070',
+    color: '#707070',
+    borderRadius: 10,
+    opacity: 0.8,
+    padding: 8,
+  },
+  studentNumberInputErr: {
+    borderBottomWidth: 1,
+    fontWeight: 'bold',
+    height: 45,
+    letterSpacing: 0.6,
+    fontSize: 17,
+    borderBottomColor: 'red',
     color: '#707070',
     borderRadius: 10,
     opacity: 0.8,
