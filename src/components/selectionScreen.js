@@ -6,6 +6,7 @@ import {
   Image,
   BackHandler,
   TouchableOpacity,
+  StatusBar,
   View,
   Alert,
 } from 'react-native';
@@ -70,6 +71,11 @@ export default class SelectionScreen extends React.Component {
       <LinearGradient
         colors={['#65BBC9', '#E4ECED']}
         style={styles.linearGradient}>
+        <StatusBar
+          barStyle="white-content"
+          backgroundColor="#65BBC9"
+          translucent={false} // headere iter
+        />
         <View style={styles.logoText}>
           <Image source={require('../images/logo.png')} style={styles.image} />
           <Text style={styles.text}>E-Yoklamam</Text>

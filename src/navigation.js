@@ -1,7 +1,6 @@
 import React from 'react';
 
 import {
-  LogoScreen,
   SelectionScreen,
   StudentLogin,
   RegisterStudent,
@@ -19,12 +18,6 @@ export default class Navigation extends React.Component {
 }
 const AppNavigator = createStackNavigator(
   {
-    Home: {
-      screen: LogoScreen,
-      navigationOptions: {
-        header: null,
-      },
-    },
     Selection: {
       screen: SelectionScreen,
       navigationOptions: {
@@ -42,7 +35,7 @@ const AppNavigator = createStackNavigator(
     },
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Selection',
     headerLayoutPreset: 'center', //header baslık konumu
     defaultNavigationOptions: {
       headerStyle: {
