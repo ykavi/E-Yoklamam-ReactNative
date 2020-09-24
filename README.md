@@ -1,2 +1,2 @@
 # E-Yoklamam-ReactNative
-# React-native giriş.
+# React-native giriş
